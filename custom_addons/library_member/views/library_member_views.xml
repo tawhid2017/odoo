@@ -1,0 +1,70 @@
+<odoo>
+    <record id="view_library_member_tree" model="ir.ui.view">
+        <field name="name">library.member.tree</field>
+        <field name="model">library.member</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="member_code"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="membership_type"/>
+                <field name="join_date"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_library_member_form" model="ir.ui.view">
+        <field name="name">library.member.form</field>
+        <field name="model">library.member</field>
+        <field name="arch" type="xml">
+            <form string="Library Member">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="member_code" readonly="1"/>
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                        </group>
+                        <group>
+                            <field name="membership_type"/>
+                            <field name="join_date"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes" placeholder="Add internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_library_member_search" model="ir.ui.view">
+        <field name="name">library.member.search</field>
+        <field name="model">library.member</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="email"/>
+                <filter name="filter_active" string="Active" domain="[('active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_membership" string="Membership" context="{'group_by':'membership_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_library_member" model="ir.actions.act_window">
+        <field name="name">Library Members</field>
+        <field name="res_model">library.member</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_library_root" name="Library" sequence="10"/>
+    <menuitem id="menu_library_members" name="Members" parent="menu_library_root" action="action_library_member" sequence="20"/>
+</odoo>
